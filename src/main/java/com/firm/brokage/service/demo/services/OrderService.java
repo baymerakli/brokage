@@ -58,7 +58,7 @@ public class OrderService {
       throw new OrderCannotBeDeletedException();
     }
 
-    order.get().setStatus(OrderStatus.CANCELLED);
+    order.get().setStatus(OrderStatus.CANCELED);
     orderRepository.save(order.get());
   }
 

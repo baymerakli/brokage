@@ -25,11 +25,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/admin/**").hasRole("ADMIN")
+                .antMatchers("/brokage/api/admin/**").hasRole("ADMIN") // Updated to match /brokage/api/admin/
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {

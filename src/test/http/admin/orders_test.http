@@ -1,20 +1,20 @@
 ### Get orders
-GET https://localhost:8080/orders
+GET https://localhost:8080/brokage/api/admin/orders
 Accept:application/json
 Authorization: Basic YWRtaW46cGFzc3dvcmQ=
 
 ### Get orders
-GET https://localhost:8080/orders?customerId=12345
+GET https://localhost:8080/brokage/api/admin/orders?customerId=1
 Accept:application/json
 Authorization: Basic YWRtaW46cGFzc3dvcmQ=
 
 ### Get orders
-GET https://localhost:8080/orders/1
+GET https://localhost:8080/brokage/api/admin/orders/1
 Accept:application/json
 Authorization: Basic YWRtaW46cGFzc3dvcmQ=
 
 ### POST Order
-POST https://localhost:8080/orders/
+POST https://localhost:8080/brokage/api/admin/orders/
 Accept:application/json
 Content-Type: application/json
 Authorization: Basic YWRtaW46cGFzc3dvcmQ=
@@ -25,7 +25,7 @@ Authorization: Basic YWRtaW46cGFzc3dvcmQ=
 > {% client.global.set("new_order_id", response.body.id); %}
 
 ### POST Order validation test
-POST https://localhost:8080/orders/
+POST https://localhost:8080/brokage/api/admin/orders/
 Accept:application/json
 Content-Type: application/json
 Authorization: Basic YWRtaW46cGFzc3dvcmQ=
@@ -39,11 +39,11 @@ Authorization: Basic YWRtaW46cGFzc3dvcmQ=
 }
 
 ### Get orders
-GET https://localhost:8080/orders/1
+GET https://localhost:8080/brokage/api/admin/orders/1
 Accept:application/json
 Authorization: Basic YWRtaW46cGFzc3dvcmQ=
 
 ### Delete Order
-DELETE https://localhost:8080/orders/2
+DELETE https://localhost:8080/brokage/api/admin/orders/2
 Accept:application/json
 Authorization: Basic YWRtaW46cGFzc3dvcmQ=

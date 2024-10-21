@@ -14,7 +14,7 @@ public class OrderSpecifications {
             List<Predicate> predicates = new ArrayList<>();
 
             if (customerId != null) {
-                predicates.add(cb.equal(root.get("customerId"), customerId));
+                predicates.add(cb.equal(root.join("customer").get("id"), customerId));
             }
             if (startDate != null) {
                 predicates.add(cb.greaterThanOrEqualTo(root.get("createdAt"), startDate));

@@ -3,9 +3,9 @@ info:
   title: Brokerage Firm API
   version: 1.0.0
 servers:
-  - url: http://localhost:8080/api
+  - url: http://localhost:8080/brokage/api
 paths:
-  /orders:
+  /admin/orders:
     post:
       summary: Create a new order
       security:
@@ -59,7 +59,7 @@ paths:
                   $ref: '#/components/schemas/OrderResponse'
         '400':
           description: Bad request
-  /orders/{orderId}:
+  /admin/orders/{orderId}:
     delete:
       summary: Delete an order
       security:
@@ -76,7 +76,7 @@ paths:
           description: Order deleted
         '404':
           description: Order not found
-  /customers/{customerId}/deposit:
+  /admin/customers/{customerId}/deposit:
     post:
       summary: Deposit money
       security:
@@ -99,7 +99,7 @@ paths:
           description: Money deposited
         '400':
           description: Bad request
-  /customers/{customerId}/withdraw:
+  /admin/customers/{customerId}/withdraw:
     post:
       summary: Withdraw money
       security:
@@ -122,7 +122,7 @@ paths:
           description: Money withdrawn
         '400':
           description: Bad request
-  /assets:
+  /admin/assets:
     get:
       summary: List all assets for a customer
       security:
