@@ -54,7 +54,7 @@ public class GetOrderControllerTest {
 
   @Test
   @DisplayName("Test that GET /orders/{id} returns 200")
-  public void getTeams_http_200() throws Exception {
+  public void getOrder_http_200() throws Exception {
     doReturn(order).when(orderService).getOrder(order.getId());
     MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get(APIPathConstant.GET_ORDER_URL.replace("{" + APIPathConstant.ORDER_REF_ID + "}", order.getId().toString()))
             .with(user("admin").password("password").roles("ADMIN"));
@@ -65,7 +65,7 @@ public class GetOrderControllerTest {
   }
   @Test
   @DisplayName("Test that GET /orders/{id} returns 404 for invalid order ID")
-  public void getUser_http_404() throws Exception {
+  public void getOrder_http_404() throws Exception {
     Long randomId = ThreadLocalRandom.current().nextLong(Long.MAX_VALUE);
     Mockito.doThrow(new OrderNotFoundException()).when(orderService).getOrder(randomId);
     MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get(APIPathConstant.GET_ORDER_URL.replace("{" + APIPathConstant.ORDER_REF_ID + "}", randomId.toString()))

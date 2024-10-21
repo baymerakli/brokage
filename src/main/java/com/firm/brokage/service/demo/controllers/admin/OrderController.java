@@ -1,4 +1,4 @@
-package com.firm.brokage.service.demo.controllers;
+package com.firm.brokage.service.demo.controllers.admin;
 
 import com.firm.brokage.service.demo.api.OrderRequest;
 import com.firm.brokage.service.demo.api.OrderResponse;

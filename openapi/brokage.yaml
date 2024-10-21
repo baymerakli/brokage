@@ -166,6 +166,12 @@ components:
           type: integer
         price:
           type: number
+      required:
+        - customerId
+        - assetName
+        - side
+        - size
+        - price
     OrderResponse:
       type: object
       properties:
@@ -193,11 +199,15 @@ components:
       properties:
         amount:
           type: number
+      required:
+        - amount
     WithdrawRequest:
       type: object
       properties:
         amount:
           type: number
+      required:
+        - amount
     AssetResponse:
       type: object
       properties:
