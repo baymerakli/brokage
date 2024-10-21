@@ -1,0 +1,42 @@
+### Get orders
+GET https://localhost:8080/orders
+Accept:application/json
+
+### Get orders
+GET https://localhost:8080/orders?customerId=12345
+Accept:application/json
+
+### Get orders
+GET https://localhost:8080/orders/1
+Accept:application/json
+
+### POST Order
+POST https://localhost:8080/orders/
+Accept:application/json
+Content-Type: application/json
+
+{
+  "name": "{{$random.alphanumeric(15)}}"
+}
+> {% client.global.set("new_order_id", response.body.id); %}
+
+### POST Order validation test
+POST https://localhost:8080/orders/
+Accept:application/json
+Content-Type: application/json
+
+{
+  "customerId": 1,
+  "assetName": "USDTRY",
+  "side": "BUY",
+  "size": 2,
+  "price": 500000.00
+}
+
+### Get orders
+GET https://localhost:8080/orders/1
+Accept:application/json
+
+### Delete Order
+DELETE https://localhost:8080/orders/2
+Accept:application/json
