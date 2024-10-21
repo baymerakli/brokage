@@ -5,6 +5,7 @@ import com.firm.brokage.service.demo.entities.Customer;
 import com.firm.brokage.service.demo.entities.Order;
 import com.firm.brokage.service.demo.enumaration.OrderStatus;
 import com.firm.brokage.service.demo.exceptions.OrderCannotBeDeletedException;
+import com.firm.brokage.service.demo.exceptions.OrderCannotBeMatchedException;
 import com.firm.brokage.service.demo.exceptions.OrderNotFoundException;
 import com.firm.brokage.service.demo.mappers.OrderMapper;
 import com.firm.brokage.service.demo.repository.OrderRepository;
@@ -13,6 +14,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -27,6 +29,9 @@ public class OrderService {
 
   @Autowired
   CustomerService customerService;
+
+  @Autowired
+  AssetService assetService;
 
   @Autowired
   OrderMapper mapper;
@@ -60,6 +65,21 @@ public class OrderService {
 
     order.get().setStatus(OrderStatus.CANCELED);
     orderRepository.save(order.get());
+  }
+
+  @Transactional
+  public void matchOrder(Long orderId) {
+    Order order = orderRepository.findById(orderId)
+            .orElseThrow(OrderNotFoundException::new); // Simplified exception throwing
+
+    if (!OrderStatus.PENDING.equals(order.getStatus())) {
+      throw new OrderCannotBeMatchedException();
+    }
+
+    assetService.updateAssetWithOrderMatch(order);
+
+    order.setStatus(OrderStatus.MATCHED);
+    orderRepository.save(order);
   }
 
   public List<Order> findOrdersByCriteria(Long customerId, LocalDate startDate, LocalDate endDate) {

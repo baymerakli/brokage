@@ -20,4 +20,5 @@ public class APIPathConstant {
     public static final String ORDERS_BASE_URL = BASE_ADMIN_URL+ "/orders";
     public static final String GET_ORDER_URL = ORDERS_BASE_URL + "/{" + ORDER_REF_ID + "}";
     public static final String DELETE_ORDER_URL = ORDERS_BASE_URL + "/{" + ORDER_REF_ID + "}";
+    public static final String MATCH_ORDER_URL = ORDERS_BASE_URL + "/{" + ORDER_REF_ID + "}/match";
 }

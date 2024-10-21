@@ -6,6 +6,7 @@ import com.firm.brokage.service.demo.mappers.OrderMapper;
 import com.firm.brokage.service.demo.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -44,9 +45,15 @@ public class OrderController {
     return mapper.orderToOrderResponse(orderService.createOrder(orderRequest));
   }
 
-  @DeleteMapping(value = DELETE_ORDER_URL, produces = {DEFAULT_CONTENT_TYPE})
-  public void deleteOrder(@PathVariable(ORDER_REF_ID) Long orderId) {
-    orderService.cancelOrder(orderId);
+  @PostMapping(value = MATCH_ORDER_URL, produces = {DEFAULT_CONTENT_TYPE})
+  public ResponseEntity<Void> matchOrder(@PathVariable(ORDER_REF_ID) Long orderId) {
+    orderService.matchOrder(orderId);
+    return ResponseEntity.noContent().build();
   }
 
+  @DeleteMapping(value = DELETE_ORDER_URL, produces = {DEFAULT_CONTENT_TYPE})
+  public ResponseEntity<Void> deleteOrder(@PathVariable(ORDER_REF_ID) Long orderId) {
+    orderService.cancelOrder(orderId);
+    return ResponseEntity.noContent().build();
+  }
 }

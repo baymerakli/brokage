@@ -72,10 +72,29 @@ paths:
             type: integer
             format: int64
       responses:
-        '200':
-          description: Order deleted
+        '204':
+          description: Order successfully deleted, no content in the response
         '404':
           description: Order not found
+  /admin/orders/{orderId}/match:
+    post:
+      summary: Match an order
+      security:
+        - basicAuth: []
+      parameters:
+        - in: path
+          name: orderId
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Order successfully matched, no content in the response
+        '404':
+          description: Order not found
+        '400':
+          description: Order cannot be matched
   /admin/customers/{customerId}/deposit:
     post:
       summary: Deposit money
