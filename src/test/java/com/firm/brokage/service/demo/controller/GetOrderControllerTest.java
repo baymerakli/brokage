@@ -3,6 +3,7 @@ package com.firm.brokage.service.demo.controller;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -55,7 +56,9 @@ public class GetOrderControllerTest {
   @DisplayName("Test that GET /orders/{id} returns 200")
   public void getTeams_http_200() throws Exception {
     doReturn(order).when(orderService).getOrder(order.getId());
-    MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get(APIPathConstant.GET_ORDER_URL.replace("{" + APIPathConstant.ORDER_REF_ID + "}", order.getId().toString()));
+    MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get(APIPathConstant.GET_ORDER_URL.replace("{" + APIPathConstant.ORDER_REF_ID + "}", order.getId().toString()))
+            .with(user("admin").password("password").roles("ADMIN"));
+
     BrokageTestUtil.generateBasicValidRequestDetails(builder);
     mvc.perform(builder)
         .andExpect(status().is2xxSuccessful());
@@ -65,7 +68,8 @@ public class GetOrderControllerTest {
   public void getUser_http_404() throws Exception {
     Long randomId = ThreadLocalRandom.current().nextLong(Long.MAX_VALUE);
     Mockito.doThrow(new OrderNotFoundException()).when(orderService).getOrder(randomId);
-    MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get(APIPathConstant.GET_ORDER_URL.replace("{" + APIPathConstant.ORDER_REF_ID + "}", randomId.toString()));
+    MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get(APIPathConstant.GET_ORDER_URL.replace("{" + APIPathConstant.ORDER_REF_ID + "}", randomId.toString()))
+            .with(user("admin").password("password").roles("ADMIN"));
     BrokageTestUtil.generateBasicValidRequestDetails(builder);
     mvc.perform(builder)
         .andExpect(status().is4xxClientError());

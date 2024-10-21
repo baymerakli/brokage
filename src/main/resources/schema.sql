@@ -3,6 +3,14 @@ DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS assets;
 DROP TABLE IF EXISTS customers;
 
+CREATE TABLE customers (
+                           id SERIAL PRIMARY KEY,
+                           name VARCHAR(255) NOT NULL,
+                           email VARCHAR(255) NOT NULL,
+                           created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+                           updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE TABLE orders (
                         id SERIAL PRIMARY KEY,
                         customer_id BIGINT,
@@ -12,7 +20,8 @@ CREATE TABLE orders (
                         order_side VARCHAR,
                         status VARCHAR,
                         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-                        updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+                        updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+                        FOREIGN KEY (customer_id) REFERENCES customers(id)
 );
 
 
@@ -24,15 +33,8 @@ CREATE TABLE assets (
                         size NUMERIC,
                         usable_size NUMERIC,
                         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-                        updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE customers (
-                           id SERIAL PRIMARY KEY,
-                           name VARCHAR(255) NOT NULL,
-                           email VARCHAR(255) NOT NULL,
-                           created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-                           updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+                        updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+                        FOREIGN KEY (customer_id) REFERENCES customers(id)
 );
 
 CREATE TABLE transactions (

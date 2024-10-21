@@ -26,6 +26,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -60,7 +61,8 @@ public class GetOrdersControllerTest {
   public void getAllOrders_http_200() throws Exception {
     doReturn(orders).when(orderService).getOrders(any(Long.class), any(), any());
 
-    MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get(APIPathConstant.ORDERS_BASE_URL);
+    MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get(APIPathConstant.ORDERS_BASE_URL)
+            .with(user("admin").password("password").roles("ADMIN"));
 
     BrokageTestUtil.generateBasicValidRequestDetails(builder);
 
@@ -74,13 +76,14 @@ public class GetOrdersControllerTest {
     doReturn(orders).when(orderService).getOrders(any(Long.class), any(), any());
 
     MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get(APIPathConstant.ORDERS_BASE_URL)
-            .param("customerId", "1") // Example customerId
-            .param("startDate", "2023-01-01") // Example startDate
-            .param("endDate", "2023-01-31"); // Example endDate
+            .param("customerId", "1")
+            .param("startDate", "2023-01-01")
+            .param("endDate", "2023-01-31")
+            .with(user("admin").password("password").roles("ADMIN"));
 
     BrokageTestUtil.generateBasicValidRequestDetails(builder);
 
     mvc.perform(builder)
-            .andExpect(status().isOk()); // Using isOk for 200 status code
+            .andExpect(status().isOk());
   }
 }
