@@ -1,13 +1,9 @@
 package com.firm.brokage.service.demo.entities;
 
-import com.firm.brokage.service.demo.enumaration.OrderSide;
-import com.firm.brokage.service.demo.enumaration.OrderStatus;
+import java.sql.Timestamp;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.*;
-import java.math.BigDecimal;
-import java.sql.Timestamp;
 
 @Getter
 @Setter

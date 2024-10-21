@@ -1,54 +1,48 @@
-### Get orders
+### List All Orders
 GET https://localhost:8080/brokage/api/admin/orders
-Accept:application/json
+Accept: application/json
 Authorization: Basic YWRtaW46cGFzc3dvcmQ=
 
-### Get orders
+### List Orders by Customer ID
 GET https://localhost:8080/brokage/api/admin/orders?customerId=1
-Accept:application/json
+Accept: application/json
 Authorization: Basic YWRtaW46cGFzc3dvcmQ=
 
-### Get orders
+### Get Specific Order
 GET https://localhost:8080/brokage/api/admin/orders/9
-Accept:application/json
+Accept: application/json
 Authorization: Basic YWRtaW46cGFzc3dvcmQ=
 
-### Get orders
+### Match Specific Order
 POST https://localhost:8080/brokage/api/admin/orders/9/match
-Accept:application/json
+Accept: application/json
 Authorization: Basic YWRtaW46cGFzc3dvcmQ=
 
-### POST Order
+### Place Order
 POST https://localhost:8080/brokage/api/admin/orders/
-Accept:application/json
-Content-Type: application/json
-Authorization: Basic YWRtaW46cGFzc3dvcmQ=
-
-{
-  "name": "{{$random.alphanumeric(15)}}"
-}
-> {% client.global.set("new_order_id", response.body.id); %}
-
-### POST Order validation test
-POST https://localhost:8080/brokage/api/admin/orders/
-Accept:application/json
+Accept: application/json
 Content-Type: application/json
 Authorization: Basic YWRtaW46cGFzc3dvcmQ=
 
 {
   "customerId": 1,
-  "assetName": "USDTRY",
+  "assetName": "USD",
   "side": "BUY",
   "size": 2,
-  "price": 500000.00
+  "price": 34.10
 }
 
-### Get orders
+### Match Order
+POST https://localhost:8080/brokage/api/admin/orders/11/match
+Accept: application/json
+Authorization: Basic YWRtaW46cGFzc3dvcmQ=
+
+### Get Order
 GET https://localhost:8080/brokage/api/admin/orders/1
-Accept:application/json
+Accept: application/json
 Authorization: Basic YWRtaW46cGFzc3dvcmQ=
 
 ### Delete Order
 DELETE https://localhost:8080/brokage/api/admin/orders/2
-Accept:application/json
+Accept: application/json
 Authorization: Basic YWRtaW46cGFzc3dvcmQ=

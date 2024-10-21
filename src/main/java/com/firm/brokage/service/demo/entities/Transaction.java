@@ -1,12 +1,11 @@
 package com.firm.brokage.service.demo.entities;
 
 import com.firm.brokage.service.demo.enumaration.TransactionType;
-import lombok.Getter;
-import lombok.Setter;
-
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import javax.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter

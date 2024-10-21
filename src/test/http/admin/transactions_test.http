@@ -1,6 +1,6 @@
-### POST Order validation test
+### Deposit to Customer Account
 POST https://localhost:8080/brokage/api/admin/customers/1/deposit
-Accept:application/json
+Accept: application/json
 Content-Type: application/json
 Authorization: Basic YWRtaW46cGFzc3dvcmQ=
 
@@ -8,9 +8,9 @@ Authorization: Basic YWRtaW46cGFzc3dvcmQ=
   "amount": 500000.00
 }
 
-### POST Order validation test
-POST https://localhost:8080/brokage/api/admin/customers/2/withdraw
-Accept:application/json
+### Withdraw from Customer Account
+POST https://localhost:8080/brokage/api/admin/customers/1/withdraw
+Accept: application/json
 Content-Type: application/json
 Authorization: Basic YWRtaW46cGFzc3dvcmQ=
 
@@ -18,9 +18,8 @@ Authorization: Basic YWRtaW46cGFzc3dvcmQ=
   "amount": 5000.00
 }
 
-
-### GET
-GET https://localhost:8080/brokage/api/admin/assets?customerId=2
-Accept:application/json
+### List Customer Assets
+GET https://localhost:8080/brokage/api/admin/assets?customerId=1
+Accept: application/json
 Content-Type: application/json
 Authorization: Basic YWRtaW46cGFzc3dvcmQ=

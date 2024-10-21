@@ -4,12 +4,10 @@ import com.firm.brokage.service.demo.api.OrderRequest;
 import com.firm.brokage.service.demo.api.OrderResponse;
 import com.firm.brokage.service.demo.entities.Order;
 import com.firm.brokage.service.demo.enumaration.OrderSide;
-import org.mapstruct.*;
-
 import java.sql.Timestamp;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
-import java.util.UUID;
+import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
 public interface OrderMapper {

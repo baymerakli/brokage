@@ -1,12 +1,12 @@
 package com.firm.brokage.service.demo.controller;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.firm.brokage.service.demo.common.APIPathConstant;
 import com.firm.brokage.service.demo.entities.Order;
+import com.firm.brokage.service.demo.exceptions.OrderNotFoundException;
 import com.firm.brokage.service.demo.services.OrderService;
 import com.firm.brokage.service.demo.util.BrokageTestUtil;
 import java.math.BigDecimal;
@@ -29,7 +29,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-public class GetOrdersControllerTest {
+public class CancelOrdersControllerTest {
 
   @Autowired
   private MockMvc mvc;
@@ -50,35 +50,29 @@ public class GetOrdersControllerTest {
   public void tearDown() {
     orders = null;
   }
-
   @Test
-  @DisplayName("Test that GET /orders/ returns 200")
-  public void getAllOrders_http_200() throws Exception {
-    doReturn(orders).when(orderService).getOrders(any(Long.class), any(), any());
+  @DisplayName("Cancel Order - HTTP 204")
+  public void cancelOrder_http_204() throws Exception {
+    Long orderId = 1L;
+    doNothing().when(orderService).cancelOrder(orderId);
 
-    MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get(APIPathConstant.ORDERS_BASE_URL)
+    MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.delete(APIPathConstant.DELETE_ORDER_URL.replace("{" + APIPathConstant.ORDER_REF_ID + "}", orderId.toString()))
             .with(user("admin").password("password").roles("ADMIN"));
 
-    BrokageTestUtil.generateBasicValidRequestDetails(builder);
-
     mvc.perform(builder)
-            .andExpect(status().isOk()); // Using isOk for 200 status code
+            .andExpect(status().isNoContent());
   }
 
   @Test
-  @DisplayName("Test that GET /orders/ returns 200")
-  public void getOrdersForACustomer_http_200() throws Exception {
-    doReturn(orders).when(orderService).getOrders(any(Long.class), any(), any());
+  @DisplayName("Cancel Order - Order Not Found - HTTP 404")
+  public void cancelOrder_orderNotFound_http_404() throws Exception {
+    Long orderId = 2L;
+    doThrow(new OrderNotFoundException()).when(orderService).cancelOrder(orderId);
 
-    MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get(APIPathConstant.ORDERS_BASE_URL)
-            .param("customerId", "1")
-            .param("startDate", "2023-01-01")
-            .param("endDate", "2023-01-31")
+    MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.delete(APIPathConstant.DELETE_ORDER_URL.replace("{" + APIPathConstant.ORDER_REF_ID + "}", orderId.toString()))
             .with(user("admin").password("password").roles("ADMIN"));
 
-    BrokageTestUtil.generateBasicValidRequestDetails(builder);
-
     mvc.perform(builder)
-            .andExpect(status().isOk());
+            .andExpect(status().isNotFound());
   }
 }

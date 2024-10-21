@@ -1,11 +1,11 @@
 package com.firm.brokage.service.demo.repository;
 
 import com.firm.brokage.service.demo.entities.Order;
-import org.springframework.data.jpa.domain.Specification;
-import javax.persistence.criteria.Predicate;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.criteria.Predicate;
+import org.springframework.data.jpa.domain.Specification;
 
 public class OrderSpecifications {
 
