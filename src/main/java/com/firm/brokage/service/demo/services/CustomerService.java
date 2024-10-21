@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,7 +52,9 @@ public class CustomerService {
       baseAsset.setAssetName(BASE_ASSET);
       baseAsset.setSize(BigDecimal.ZERO);
       baseAsset.setUsableSize(BigDecimal.ZERO);
+      baseAsset.setCreatedAt(new Timestamp(System.currentTimeMillis()));
     }
+    baseAsset.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
     baseAsset.setSize(baseAsset.getSize().add(amount));
     baseAsset.setUsableSize(baseAsset.getUsableSize().add(amount));
     assetRepository.save(baseAsset);
@@ -65,11 +68,12 @@ public class CustomerService {
       throw new CustomerNotFoundException();
     }
 
-    Asset tryAsset = assetRepository.findByCustomerIdAndAssetName(customerId, "TRY");
-    if (tryAsset != null && tryAsset.getUsableSize().compareTo(amount) >= 0) {
-      tryAsset.setSize(tryAsset.getSize().subtract(amount));
-      tryAsset.setUsableSize(tryAsset.getUsableSize().subtract(amount));
-      assetRepository.save(tryAsset);
+    Asset baseAsset = assetRepository.findByCustomerIdAndAssetName(customerId, "TRY");
+    if (baseAsset != null && baseAsset.getUsableSize().compareTo(amount) >= 0) {
+      baseAsset.setSize(baseAsset.getSize().subtract(amount));
+      baseAsset.setUsableSize(baseAsset.getUsableSize().subtract(amount));
+      baseAsset.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+      assetRepository.save(baseAsset);
 
       createTransaction(customer.get(), TransactionType.WITHDRAW, amount);
     } else {
@@ -82,6 +86,7 @@ public class CustomerService {
     transaction.setCustomer(customer);
     transaction.setTransactionType(type);
     transaction.setAmount(amount);
+    transaction.setCreatedAt(new Timestamp(System.currentTimeMillis()));
     transactionRepository.save(transaction);
   }
 

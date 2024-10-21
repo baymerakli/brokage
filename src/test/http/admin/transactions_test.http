@@ -1,0 +1,25 @@
+### POST Order validation test
+POST https://localhost:8080/customers/2/deposit
+Accept:application/json
+Content-Type: application/json
+Authorization: Basic YWRtaW46cGFzc3dvcmQ=
+
+{
+  "amount": 500000.00
+}
+
+### POST Order validation test
+POST https://localhost:8080/customers/2/withdraw
+Accept:application/json
+Content-Type: application/json
+Authorization: Basic YWRtaW46cGFzc3dvcmQ=
+
+{
+  "amount": 5000.00
+}
+
+### POST Order validation test
+GET https://localhost:8080/assets?customerId=2
+Accept:application/json
+Content-Type: application/json
+Authorization: Basic YWRtaW46cGFzc3dvcmQ=

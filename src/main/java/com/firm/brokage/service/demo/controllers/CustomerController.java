@@ -32,7 +32,7 @@ public class CustomerController {
     return ResponseEntity.ok().build();
   }
 
-  @PostMapping(value = "CUSTOMER_DEPOSIT_URL", produces = {DEFAULT_CONTENT_TYPE})
+  @PostMapping(value = CUSTOMER_DEPOSIT_URL, produces = {DEFAULT_CONTENT_TYPE})
   public ResponseEntity<?> depositMoney(@PathVariable(CUSTOMER_REF_ID) Long customerId,
                                         @Valid @RequestBody DepositRequest depositRequest) {
     customerService.depositMoney(customerId, depositRequest.getAmount());
